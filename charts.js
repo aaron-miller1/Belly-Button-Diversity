@@ -15,6 +15,7 @@ function init() {
 
     // Use the first sample from the list to build the initial plots
     var firstSample = sampleNames[0];
+    buildCharts1(firstSample);
     buildCharts(firstSample);
     buildMetadata(firstSample); 
   });
@@ -27,6 +28,7 @@ function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildMetadata(newSample);
   buildCharts(newSample);
+  buildCharts1(newSample);
   
 }
 
@@ -54,7 +56,7 @@ function buildMetadata(sample) {
 }
 
 // 1. Create the buildCharts function.
-function buildCharts(sample) {
+function buildCharts1(sample) {
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     // 3. Create a variable that holds the samples array. 
@@ -89,11 +91,13 @@ function buildCharts(sample) {
     // 8. Create the trace for the bar chart. 
     var barData = [{
       x: sampleValues.slice(0,10).reverse(),
+      y: yticks,
       text: otuLabels.slice(0,10).reverse(),
+      orientation: "h",
       type: "bar"
-    }
-      
-    ];
+    }];
+
+
     // 9. Create the layout for the bar chart. 
     var barLayout = {
       title: "Top Ten Bacteria Cultures",
@@ -115,7 +119,7 @@ function buildCharts(sample) {
      
     };
     // 10. Use Plotly to plot the data with the layout. 
-    Plotly.newPlot("bar", barData, barLayout, {responsive: true});
+    Plotly.newPlot("bar", barData, barLayout);
   });
 }
 
@@ -127,8 +131,28 @@ function buildCharts(sample) {
   // Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     
+    console.log(data);
+    var samplesArray = data.samples;
+    console.log(samplesArray);
+  // 4. Create a variable that filters the samples for the object with the desired sample number.
+    var selectedIDsample = samplesArray.filter(data => data.id == sample);
+    console.log(selectedIDsample);
+  //  5. Create a variable that holds the first sample in the array.
+    var firstSample = selectedIDsample[0];
+    console.log(firstSample);
 
-    
+  // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
+    var otuIds = firstSample.otu_ids;
+
+    var otuLabels = firstSample.otu_labels;
+
+    var sampleValues = firstSample.sample_values;
+
+    console.log(otuIds);
+    console.log(otuLabels);
+    console.log(sampleValues);
+
+
     // 1. Create the trace for the bubble chart.
     var bubbleData = [{
       x: otuIds,
