@@ -1,6 +1,6 @@
 # Belly-Button-Diversity
 
-[Link to Dashboard](https://aaron-miller1.github.io/Belly-Button-Diversity/ "Website Link")
+[Website Link](https://aaron-miller1.github.io/Belly-Button-Diversity/ "Website Link")
 
 ### SUMMARY
 
